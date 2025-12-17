@@ -13,14 +13,23 @@ pipeline {
         bat 'mvn clean install -DskipTests'
       }
     }
-
+    
+   stages {
+          stage("build & SonarQube analysis") {
+            agent any
+            steps {
+              withSonarQubeEnv('My SonarQube Server') {
+                sh 'mvn clean package sonar:sonar'
+              }
+            }
+          }
+   }
+   
     stage('Run') {
       steps {
-        timeout(2) {
                     bat 'mvn -pl runner-ms spring-boot:run -DskipTests'
-
-}
       }
     }
+    
   }
 }
