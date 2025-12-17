@@ -13,9 +13,9 @@ pipeline {
         bat 'mvn clean install -DskipTests'
       }
     }
-  }
+  
     
-   stages {
+
           stage("build & SonarQube analysis") {
             agent any
             steps {
@@ -24,7 +24,7 @@ pipeline {
               }
             }
           }
-   }
+   
    stage("Quality Gate") {
             steps {
               timeout(time: 1, unit: 'HOURS') {
@@ -40,4 +40,5 @@ pipeline {
     }
     
   
+  }
 }
