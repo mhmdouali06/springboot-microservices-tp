@@ -13,6 +13,7 @@ pipeline {
         bat 'mvn clean install -DskipTests'
       }
     }
+  }
     
    stages {
           stage("build & SonarQube analysis") {
@@ -38,5 +39,5 @@ pipeline {
       }
     }
     
-  }
+  
 }
