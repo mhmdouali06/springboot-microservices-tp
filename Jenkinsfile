@@ -19,12 +19,12 @@ pipeline {
             agent any
             steps {
               withSonarQubeEnv('My SonarQube Server') {
-                sh 'mvn clean package sonar:sonar'
+                bat 'mvn clean package sonar:sonar'
               }
             }
           }
    }
-   
+
     stage('Run') {
       steps {
                     bat 'mvn -pl runner-ms spring-boot:run -DskipTests'
