@@ -16,7 +16,9 @@ pipeline {
 
     stage('build & SonarQube analysis') {
       steps {
-        bat 'mvn clean package sonar:sonar -Dsonar.token=sqa_ac4ba011da0b9019c4e3be65fae544328fb545af -Dsonar.host.url=http://localhost:9000'
+        withSonarQubeEnv('sonar') {
+            bat 'mvn clean package sonar:sonar'
+        }
       }
     }
 
