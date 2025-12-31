@@ -13,30 +13,27 @@ pipeline {
         bat 'mvn clean install -DskipTests'
       }
     }
-  
-    
 
-          stage("build & SonarQube analysis") {
-            steps {
-                bat 'mvn clean package sonar:sonar'
-              
-            }
-          }
-   
-   stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
+    stage('build & SonarQube analysis') {
+      steps {
+        withSonarQubeEnv('sonar') {
+            bat 'mvn clean package sonar:sonar'
+        }
+      }
+    }
+
+    stage('Quality Gate') {
+      steps {
+        timeout(time: 1, unit: 'HOURS') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
 
     stage('Run') {
       steps {
-                    bat 'mvn -pl runner-ms spring-boot:run -DskipTests'
+        bat 'mvn -pl runner-ms spring-boot:run -DskipTests'
       }
     }
-    
-  
   }
 }
